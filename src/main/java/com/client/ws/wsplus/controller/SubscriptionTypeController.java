@@ -1,6 +1,6 @@
 package com.client.ws.wsplus.controller;
 
-import com.client.ws.wsplus.exception.NotFoundException;
+import com.client.ws.wsplus.dto.SubscriptionTypeDto;
 import com.client.ws.wsplus.model.SubscriptionType;
 
 import com.client.ws.wsplus.service.SubscriptionTypeService;
@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/subscription-type")
@@ -21,7 +20,7 @@ public class SubscriptionTypeController {
         this.subscriptionTypeService = subscriptionTypeService;
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<List<SubscriptionType>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(subscriptionTypeService.findAll());
     }
@@ -29,6 +28,11 @@ public class SubscriptionTypeController {
     @GetMapping("/{id}")
     public ResponseEntity<SubscriptionType> findByAll(@PathVariable("id") Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(subscriptionTypeService.findById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<SubscriptionType> create(@RequestBody SubscriptionTypeDto dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(subscriptionTypeService.create(dto));
     }
 
 

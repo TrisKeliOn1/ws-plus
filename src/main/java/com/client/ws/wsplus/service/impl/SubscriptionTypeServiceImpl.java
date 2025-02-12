@@ -1,5 +1,6 @@
 package com.client.ws.wsplus.service.impl;
 
+import com.client.ws.wsplus.dto.SubscriptionTypeDto;
 import com.client.ws.wsplus.exception.NotFoundException;
 import com.client.ws.wsplus.model.SubscriptionType;
 import com.client.ws.wsplus.repository.SubscriptionTypeRepository;
@@ -34,8 +35,14 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
     }
 
     @Override
-    public SubscriptionType create(SubscriptionType subscriptionType) {
-        return null;
+    public SubscriptionType create(SubscriptionTypeDto dto) {
+        return subscriptionTypeRepository.save(SubscriptionType.builder()
+                        .id(dto.getId())
+                        .name(dto.getName())
+                        .accessMonth(dto.getAccessMonth())
+                        .price(dto.getPrice())
+                        .productKey(dto.getProductKey())
+                .build());
     }
 
     @Override
@@ -45,6 +52,6 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
 
     @Override
     public void delete(Long id) {
-
+        //
     }
 }
