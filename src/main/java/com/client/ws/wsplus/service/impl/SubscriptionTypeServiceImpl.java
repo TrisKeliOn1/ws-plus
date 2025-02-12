@@ -1,5 +1,6 @@
 package com.client.ws.wsplus.service.impl;
 
+import com.client.ws.wsplus.exception.NotFoundException;
 import com.client.ws.wsplus.model.SubscriptionType;
 import com.client.ws.wsplus.repository.SubscriptionTypeRepository;
 import com.client.ws.wsplus.service.SubscriptionTypeService;
@@ -26,7 +27,7 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
     public SubscriptionType findById(Long id) {
         Optional<SubscriptionType> optionalSubscriptionType = subscriptionTypeRepository.findById(id);
         if (optionalSubscriptionType.isEmpty()) {
-            return null;
+            throw new NotFoundException("SubscriptionType não encontrado");
         }
 
         return optionalSubscriptionType.get();
