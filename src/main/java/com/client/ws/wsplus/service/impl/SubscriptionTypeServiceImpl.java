@@ -3,6 +3,7 @@ package com.client.ws.wsplus.service.impl;
 import com.client.ws.wsplus.dto.SubscriptionTypeDto;
 import com.client.ws.wsplus.exception.NotFoundException;
 import com.client.ws.wsplus.exception.BadRequestException;
+import com.client.ws.wsplus.mapper.SubscriptionTypeMapper;
 import com.client.ws.wsplus.model.SubscriptionType;
 import com.client.ws.wsplus.repository.SubscriptionTypeRepository;
 import com.client.ws.wsplus.service.SubscriptionTypeService;
@@ -37,26 +38,14 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
             throw new BadRequestException("Id deve ser nulo");
         }
 
-        return subscriptionTypeRepository.save(SubscriptionType.builder()
-                        .id(dto.getId())
-                        .name(dto.getName())
-                        .accessMonth(dto.getAccessMonth())
-                        .price(dto.getPrice())
-                        .productKey(dto.getProductKey())
-                .build());
+        return subscriptionTypeRepository.save(SubscriptionTypeMapper.fromDtoToEntity(dto));
     }
 
     @Override
     public SubscriptionType update(Long id, SubscriptionTypeDto dto) {
         getSubscriptionType(id);
-
-        return subscriptionTypeRepository.save(SubscriptionType.builder()
-                .id(id)
-                .name(dto.getName())
-                .accessMonth(dto.getAccessMonth())
-                .price(dto.getPrice())
-                .productKey(dto.getProductKey())
-                .build());
+        dto.setId(id);
+        return subscriptionTypeRepository.save(SubscriptionTypeMapper.fromDtoToEntity(dto));
     }
 
     @Override
