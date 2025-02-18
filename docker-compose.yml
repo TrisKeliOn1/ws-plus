@@ -10,3 +10,20 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: Dba@123456
       MYSQL_DATABASE: WSPLUS
+    volumes:
+      - mysql_data_container:/data/db
+
+#mongo para consumir api externa
+  mongo:
+    ports:
+      - "27017:27017"
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: Dba@123456
+    volumes:
+      - mongo_data_container:/data/db
+volumes:
+  mysql_data_container:
+  mongo_data_container:
