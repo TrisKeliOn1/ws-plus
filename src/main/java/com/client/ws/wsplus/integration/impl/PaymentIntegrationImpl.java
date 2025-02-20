@@ -16,20 +16,18 @@ import java.util.Base64;
 @Component
 public class PaymentIntegrationImpl implements PaymentIntegration {
 
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
+    private final HttpHeaders headers;
 
     public PaymentIntegrationImpl() {
         restTemplate = new RestTemplate();
+        headers = getHttpHeaders();
     }
 
     @Override
     public CustomerDto createCustomer(CustomerDto dto) {
         try {
-            HttpHeaders headers = new HttpHeaders();
-            String credential = "root:Dba@123456";
-            String base64 = new String(Base64.getEncoder().encodeToString(credential.getBytes()));
-            headers.add("Authorization", "Basic " +base64);
-            HttpEntity<CustomerDto> request = new HttpEntity<>(dto, headers);
+            HttpEntity<CustomerDto> request = new HttpEntity<>(dto, this.headers);
             ResponseEntity<CustomerDto> response =
                     restTemplate.exchange("http://localhost:8081/ws-pluspay/v1/customer", HttpMethod.POST, request, CustomerDto.class);
             return response.getBody();
@@ -40,7 +38,14 @@ public class PaymentIntegrationImpl implements PaymentIntegration {
 
     @Override
     public OrderDto createOrder(OrderDto dto) {
-        return null;
+        try {
+            HttpEntity<OrderDto> request = new HttpEntity<>(dto, this.headers);
+            ResponseEntity<OrderDto> response =
+                    restTemplate.exchange("http://localhost:8081/ws-pluspay/v1/order", HttpMethod.POST, request, OrderDto.class);
+            return response.getBody();
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     @Override
