@@ -3,6 +3,7 @@ package com.client.ws.wsplus.integration.impl;
 import com.client.ws.wsplus.dto.pay.CustomerDto;
 import com.client.ws.wsplus.integration.PaymentIntegration;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
@@ -10,6 +11,7 @@ class PaymentIntegrationImplTest {
 
     private PaymentIntegration paymentIntegration;
 
+    @Autowired
     public PaymentIntegrationImplTest(PaymentIntegration paymentIntegration) {
         this.paymentIntegration = paymentIntegration;
     }
