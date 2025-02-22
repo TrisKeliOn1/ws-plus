@@ -50,7 +50,14 @@ public class PaymentIntegrationImpl implements PaymentIntegration {
 
     @Override
     public Boolean processPayment(PaymentDto dto) {
-        return null;
+        try {
+            HttpEntity<PaymentDto> request = new HttpEntity<>(dto, this.headers);
+            ResponseEntity<Boolean> response =
+                    restTemplate.exchange("http://localhost:8081/ws-pluspay/v1/payment/credit-card/", HttpMethod.POST, request, Boolean.class);
+            return response.getBody();
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     private static HttpHeaders getHttpHeaders() {
